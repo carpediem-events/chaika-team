@@ -19,11 +19,6 @@ export function doingNow(now: number, id: PersonId) {
 export function TeamView({ now, me, onPerson }: { now: number; me: Me; onPerson: (id: PersonId) => void }) {
   return (
     <section className="view">
-      <header className="view__head">
-        <h1 className="view__title">Команда</h1>
-        <p className="view__sub">Нажми на человека — увидишь его день</p>
-      </header>
-
       <div className="people">
         {people.map((p, i) => {
           const doing = doingNow(now, p.id)
