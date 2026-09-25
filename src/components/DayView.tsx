@@ -146,7 +146,7 @@ function Bring({ me }: { me: Me }) {
       </h2>
       <ul className="tasks tasks--compact">
         {rows.map((r) => (
-          <li key={r.who} className={`task${r.who === me ? ' task--mine' : ''}`}>
+          <li key={r.who} className={`task${r.who === me || r.who === 'all' ? ' task--mine' : ''}`}>
             <div className="task__row">
               {r.who === 'all' ? (
                 <span className="task__icon">
@@ -164,7 +164,13 @@ function Bring({ me }: { me: Me }) {
         ))}
       </ul>
       <p className="bring__dress">
-        <Icon name="shirt" size={18} /> {dress}
+        <span className="task__icon">
+          <Icon name="shirt" size={16} />
+        </span>
+        <span>
+          <span className="bring__who">Все · одежда</span>
+          {dress}
+        </span>
       </p>
     </motion.div>
   )

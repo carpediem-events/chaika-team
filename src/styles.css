@@ -352,14 +352,17 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   display: flex;
   align-items: center;
   gap: 9px;
-  margin-top: 10px;
-  padding: 10px 12px;
+  margin-top: 5px;
+  padding: 6px 8px 6px 6px;
+  border: 1px solid transparent;
   border-radius: 13px;
-  background: var(--bone);
-  font-weight: 800;
+  background: var(--ink-strong);
+  color: var(--bone);
+  font-weight: 700;
   font-size: 14.5px;
-  color: var(--ink-strong);
+  line-height: 1.25;
 }
+.bring__dress .task__icon { width: 28px; height: 28px; border-radius: 9px; background: rgba(242, 239, 234, 0.14); color: var(--bone); }
 
 /* прошедшее — на месте и открыто, просто тише */
 .block--past { background: transparent; box-shadow: inset 0 0 0 1px var(--line); }

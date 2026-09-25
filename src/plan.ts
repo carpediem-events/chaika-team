@@ -126,7 +126,7 @@ export const blocks: Block[] = [
       { text: 'Встречать, показывать, где что', who: ['hostess'] },
       { text: 'Принимать оплату', who: ['pay'] },
       { text: 'Бумажная анкета — кто не заполнил', who: ['hostess'] },
-      { text: 'Интервью на камеру', who: ['video'] },
+      { text: 'Интервью на камеру', who: ['photo', 'video'] },
       { text: 'Знакомиться с гостями', who: ['all'] },
     ],
   },
@@ -211,8 +211,8 @@ export const blocks: Block[] = [
     kind: 'final',
     tasks: [
       { text: 'Последнее слово: спасибо Чайке, упомянуть Елену Гресикову', who: ['host'] },
-      { text: 'Общее фото', who: ['photo'] },
-      { text: 'Видео-отзывы гостей и команды', who: ['video'] },
+      { text: 'Общее фото', who: ['all'] },
+      { text: 'Видео-отзывы гостей и команды', who: ['photo', 'video'] },
       { text: 'Убрать зал', who: ['all'] },
     ],
   },
@@ -236,11 +236,12 @@ export const END = '20:00'
 
 export const personById = Object.fromEntries(people.map((p) => [p.id, p])) as Record<PersonId, Person>
 
+/** Люди задачи в порядке ролей: главный по задаче — первым (фото раньше видео — Лиза впереди) */
 export function peopleOf(task: Task): PersonId[] {
   if (task.who.includes('all')) return people.map((p) => p.id)
   const ids = new Set<PersonId>()
   for (const w of task.who) roles.find((r) => r.id === w)?.people.forEach((id) => ids.add(id))
-  return people.map((p) => p.id).filter((id) => ids.has(id))
+  return [...ids]
 }
 
 export const isAll = (task: Task) => task.who.includes('all')
