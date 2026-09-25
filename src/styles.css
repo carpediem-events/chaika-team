@@ -334,6 +334,33 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .block__sub { margin-top: 4px; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); }
 .block .tasks { margin-top: 12px; }
 
+/* до старта: что везём */
+.bring { padding: 16px 14px 14px; border-radius: 24px; background: var(--paper); box-shadow: var(--shadow); }
+.bring__title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 26px;
+  color: var(--ink-strong);
+}
+.bring__who { display: block; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.6; }
+.bring .task__row { align-items: center; }
+.bring__dress {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 13px;
+  background: var(--bone);
+  font-weight: 800;
+  font-size: 14.5px;
+  color: var(--ink-strong);
+}
+
 /* прошедшее — на месте и открыто, просто тише */
 .block--past { background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
 .block--past > * { opacity: 0.55; filter: saturate(0.3); }
@@ -684,7 +711,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     margin-top: 6pt;
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: 32pt;
+    font-size: 29pt;
     line-height: 0.95;
     letter-spacing: -0.02em;
   }
@@ -703,7 +730,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   }
   .print__qr img { width: 46pt; height: 46pt; }
 
-  .print__day { margin-top: 10pt; }
+  .print__day { margin-top: 8pt; }
   .pr {
     display: grid;
     grid-template-columns: 36pt 14pt 116pt 1fr;
@@ -746,7 +773,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     justify-content: space-between;
     align-items: center;
     gap: 8pt;
-    padding: 1.35pt 0;
+    padding: 1.15pt 0;
   }
   .pr__tasks li + li { border-top: 0.5pt solid rgba(60, 74, 87, 0.1); }
   .pr__text { flex: 1; min-width: 0; font-weight: 700; }
@@ -758,11 +785,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
   .print__roles { margin-top: 6pt; padding: 7pt 11pt 8pt; border-radius: 12pt; background: var(--paper); }
   .print__roles h3 { font-family: var(--font-display); font-weight: 400; font-size: 12.5pt; margin-bottom: 4pt; }
-  .print__grid { display: grid; grid-template-columns: 1fr 1fr; grid-auto-flow: dense; gap: 3pt 16pt; }
-  .prr--wide { grid-column: span 2; }
-  .prr { display: flex; align-items: center; gap: 5pt; }
+  .print__grid { display: flex; flex-wrap: wrap; gap: 4pt 14pt; }
+  .prr { display: inline-flex; align-items: center; gap: 4pt; white-space: nowrap; }
   .prr svg { flex: none; color: var(--ink-soft); }
-  .prr b { flex: none; width: 78pt; font-weight: 800; }
+  .prr b { font-weight: 800; }
   .prr .pr__who { justify-content: flex-start; flex-wrap: nowrap; }
 }
 

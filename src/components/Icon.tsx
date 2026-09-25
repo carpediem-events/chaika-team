@@ -1,6 +1,6 @@
 import type { IconName } from '../plan'
 
-type Name = IconName | 'now' | 'list' | 'team' | 'print' | 'pin' | 'arrow' | 'close' | 'check'
+type Name = IconName | 'now' | 'list' | 'team' | 'print' | 'pin' | 'arrow' | 'close' | 'check' | 'bag' | 'shirt'
 
 const paths: Record<Name, string> = {
   compass: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm3.5-12.5-2 5-5 2 2-5 5-2Z',
@@ -21,6 +21,10 @@ const paths: Record<Name, string> = {
   pin: 'M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Zm0-9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
   arrow: 'M5 12h14m-5-5 5 5-5 5',
   close: 'M6 6l12 12M18 6 6 18',
+  phone: 'M8 3h8a1.5 1.5 0 0 1 1.5 1.5v15A1.5 1.5 0 0 1 16 21H8a1.5 1.5 0 0 1-1.5-1.5v-15A1.5 1.5 0 0 1 8 3Zm3 15h2',
+  form: 'M9 4h6v3H9V4ZM9 5.5H6V21h12V5.5h-3M9 12h6M9 16h4',
+  bag: 'M5 8h14l-1 13H6L5 8Zm4 0V6a3 3 0 0 1 6 0v2',
+  shirt: 'M8 4 4 6.5 5.5 11 7 10.5V20h10v-9.5l1.5.5L20 6.5 16 4c-.5 1.5-2 2.5-4 2.5S8.5 5.5 8 4Z',
   check: 'M5 12.5l4.5 4.5L19 7',
 }
 

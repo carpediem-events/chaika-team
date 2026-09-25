@@ -83,7 +83,7 @@ export function PrintSheet() {
         <h3>Кто за что</h3>
         <div className="print__grid">
           {roles.map((r) => (
-            <div key={r.id} className={`prr${r.people.length > 3 ? ' prr--wide' : ''}`}>
+            <div key={r.id} className="prr">
               <Icon name={r.icon} size={13} />
               <b>{r.title}</b>
               <span className="pr__who">

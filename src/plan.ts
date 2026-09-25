@@ -7,6 +7,7 @@ export const EVENT = { y: 2026, m: 9, d: 26 } // 26 сентября, суббо
 
 export const venue = {
   name: 'Kulturzentrum GOROD',
+  address: 'Arnulfstraße 197',
   map: 'https://maps.app.goo.gl/9KK73kS2ksNDq4Br6',
 }
 
@@ -26,7 +27,8 @@ export const people: Person[] = [
 ]
 
 export type RoleId =
-  | 'coord' | 'host' | 'meet' | 'photo' | 'video' | 'pay' | 'hostess' | 'buffet' | 'bar' | 'tech'
+  | 'coord' | 'host' | 'meet' | 'photo' | 'video' | 'stories' | 'pay' | 'forms' | 'hostess' | 'buffet' | 'bar'
+  | 'light' | 'photozone'
 
 export type Role = { id: RoleId; title: string; icon: IconName; people: PersonId[] }
 
@@ -35,16 +37,20 @@ export const roles: Role[] = [
   { id: 'host', title: 'Ведущие', icon: 'mic', people: ['lera', 'stas'] },
   { id: 'meet', title: 'Встреча Чайки', icon: 'star', people: ['stas'] },
   { id: 'photo', title: 'Фото', icon: 'camera', people: ['liza'] },
-  { id: 'video', title: 'Видео и рилсы', icon: 'video', people: ['nastya', 'stas', 'lera', 'sasha', 'liza'] },
+  { id: 'video', title: 'Видео и рилсы', icon: 'video', people: ['nastya', 'stas', 'lera', 'sasha'] },
+  { id: 'stories', title: 'Сторис для Розы', icon: 'phone', people: ['sasha'] },
   { id: 'pay', title: 'Оплата', icon: 'card', people: ['sasha'] },
+  { id: 'forms', title: 'Анкеты гостей', icon: 'form', people: ['vlad'] },
   { id: 'hostess', title: 'Хостес', icon: 'hand', people: ['masha', 'eduard'] },
   { id: 'buffet', title: 'Буфет', icon: 'plate', people: ['masha', 'vlad', 'eduard'] },
   { id: 'bar', title: 'Бар · чай, кофе', icon: 'cup', people: ['vlad'] },
-  { id: 'tech', title: 'Техника и свет', icon: 'bulb', people: ['vlad'] },
+  { id: 'light', title: 'Свет и техника', icon: 'bulb', people: ['vlad', 'eduard', 'liza'] },
+  { id: 'photozone', title: 'Фотозона', icon: 'star', people: ['liza', 'lera'] },
 ]
 
 export type IconName =
-  | 'compass' | 'mic' | 'star' | 'camera' | 'video' | 'card' | 'hand' | 'plate' | 'cup' | 'bulb' | 'broom'
+  | 'compass' | 'mic' | 'star' | 'camera' | 'video' | 'phone' | 'card' | 'form' | 'hand' | 'plate' | 'cup' | 'bulb'
+  | 'broom'
 
 /** 'all' — вся команда */
 export type Who = RoleId | 'all'
@@ -89,10 +95,13 @@ export const blocks: Block[] = [
     kind: 'prep',
     tasks: [
       { text: 'Стулья и столы', who: ['all'] },
-      { text: 'Фотозона', who: ['all'] },
-      { text: 'Свет', who: ['tech'] },
+      { text: 'Бейджи с именами', who: ['all'] },
+      { text: 'Фотозона', who: ['photozone'] },
+      { text: 'Свет', who: ['light'] },
       { text: 'Закуски', who: ['buffet'] },
+      { text: 'Передать команде: кто не в кадр, у кого аллергии', who: ['forms'] },
       { text: 'Снимаем команду за работой', who: ['photo', 'video'] },
+      { text: 'Видео с подготовки — сразу Розе в сторис', who: ['stories'] },
     ],
   },
   {
@@ -116,6 +125,7 @@ export const blocks: Block[] = [
     tasks: [
       { text: 'Встречать, показывать, где что', who: ['hostess'] },
       { text: 'Принимать оплату', who: ['pay'] },
+      { text: 'Бумажная анкета — кто не заполнил', who: ['hostess'] },
       { text: 'Интервью на камеру', who: ['video'] },
       { text: 'Знакомиться с гостями', who: ['all'] },
     ],
@@ -197,16 +207,27 @@ export const blocks: Block[] = [
     start: '19:00',
     end: '20:00',
     title: 'Финал',
-    sub: 'Автографы и общение',
+    sub: 'Фотозона, общение, обмен контактами',
     kind: 'final',
     tasks: [
       { text: 'Последнее слово: спасибо Чайке, упомянуть Елену Гресикову', who: ['host'] },
       { text: 'Общее фото', who: ['photo'] },
-      { text: 'Видео-отзывы гостей', who: ['video'] },
+      { text: 'Видео-отзывы гостей и команды', who: ['video'] },
       { text: 'Убрать зал', who: ['all'] },
     ],
   },
 ]
+
+/** Показывается до 11:00: кто что везёт и в чём приходим */
+export const bring: { who: PersonId | 'all'; items: string }[] = [
+  { who: 'stas', items: 'Чёрный задник, бейджи' },
+  { who: 'lera', items: 'Гирлянда, малярный скотч, имена для бейджей, бумажные анкеты' },
+  { who: 'liza', items: 'Шары, воланы, скрепки' },
+  { who: 'eduard', items: 'Задники и свет' },
+  { who: 'all', items: 'Заряженный павербанк' },
+]
+
+export const dress = 'Джинсы и чёрный верх'
 
 /** 20:00 — зал освобождаем */
 export const END = '20:00'

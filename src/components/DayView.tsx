@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'motion/react'
-import { accent, blocks, END, isAll, peopleOf, venue, type Task } from '../plan'
+import { accent, blocks, bring, dress, END, isAll, peopleOf, personById, venue, type Task } from '../plan'
+import { Avatar } from './Avatar'
 import { at, phaseAt, span } from '../time'
 import { Burst } from './Burst'
 import { Icon } from './Icon'
@@ -41,13 +42,15 @@ export function DayView({ now, me }: { now: number; me: Me }) {
 
   return (
     <section className="view" ref={root}>
+      {ph.kind === 'before' && <Bring me={me} />}
+
       {ph.kind === 'before' && (
         <Stage color={accent.prep}>
           <p className="stage__kicker">До сбора команды</p>
           <Ticker className="stage__count" text={hms(ph.left)} />
           <p className="stage__sub">Суббота, 26.09 · 11:00</p>
           <a className="stage__place" href={venue.map} target="_blank" rel="noreferrer">
-            <Icon name="pin" size={16} /> {venue.name}
+            <Icon name="pin" size={16} /> {venue.name} · {venue.address}
           </a>
         </Stage>
       )}
@@ -125,6 +128,45 @@ export function DayView({ now, me }: { now: number; me: Me }) {
         <Icon name="print" size={18} /> Распечатать
       </button>
     </section>
+  )
+}
+
+/** До старта: кто что везёт и в чём приходим */
+function Bring({ me }: { me: Me }) {
+  const rows = me === 'all' ? bring : [...bring].sort((a, b) => Number(b.who === me) - Number(a.who === me))
+  return (
+    <motion.div
+      className="bring"
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease }}
+    >
+      <h2 className="bring__title">
+        <Icon name="bag" size={20} /> Взять с собой
+      </h2>
+      <ul className="tasks tasks--compact">
+        {rows.map((r) => (
+          <li key={r.who} className={`task${r.who === me ? ' task--mine' : ''}`}>
+            <div className="task__row">
+              {r.who === 'all' ? (
+                <span className="task__icon">
+                  <Icon name="team" size={16} />
+                </span>
+              ) : (
+                <Avatar id={r.who} size={28} />
+              )}
+              <span className="task__text">
+                <span className="bring__who">{r.who === 'all' ? 'Все' : personById[r.who].name}</span>
+                {r.items}
+              </span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p className="bring__dress">
+        <Icon name="shirt" size={18} /> {dress}
+      </p>
+    </motion.div>
   )
 }
 
