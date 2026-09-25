@@ -89,30 +89,22 @@ export function DayView({ now, me }: { now: number; me: Me }) {
           )
         }
 
-        if (now >= at(b.end)) {
-          return (
-            <div key={b.id} className="past">
-              <span className="past__time">{b.start}</span>
-              <span className="past__title">{b.title}</span>
-              <Icon name="check" size={16} />
-            </div>
-          )
-        }
-
+        const past = now >= at(b.end)
         return (
           <motion.article
             key={b.id}
-            className="block"
+            className={`block${past ? ' block--past' : ''}`}
             style={{ '--accent': accent[b.kind] } as React.CSSProperties}
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.04 * Math.max(0, i - nextIndex), duration: 0.55, ease }}
+            transition={{ delay: past ? 0 : 0.04 * Math.max(0, i - nextIndex), duration: 0.55, ease }}
           >
             <p className="block__meta">
               <span className="block__time">
                 {b.start}–{b.end}
               </span>
               {i === nextIndex && ph.kind === 'live' && <span className="soon">через {span(at(b.start) - now)}</span>}
+              {past && <Icon name="check" size={16} className="block__check" />}
             </p>
             <h2 className="block__title">
               <i className="dot" style={{ background: accent[b.kind] }} />
@@ -124,9 +116,9 @@ export function DayView({ now, me }: { now: number; me: Me }) {
         )
       })}
 
-      <div className={now >= at(END) ? 'past' : 'past past--end'}>
-        <span className="past__time">{END}</span>
-        <span className="past__title">Покидаем зал</span>
+      <div className="end">
+        <span className="end__time">{END}</span>
+        <span>Покидаем зал</span>
       </div>
 
       <button className="print-btn" onClick={() => window.print()}>

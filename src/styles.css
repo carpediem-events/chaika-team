@@ -209,6 +209,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .stage .task--mine .stack .avatar--ring { box-shadow: 0 0 0 2px var(--bone), 0 0 0 3.5px var(--ink-deep); }
 .stage .all-pill { background: rgba(242, 239, 234, 0.14); color: var(--bone); }
 .stage .task--mine .all-pill { background: var(--bone-2); color: var(--ink-soft); }
+.stage .name { background: rgba(242, 239, 234, 0.12); }
+.stage .name--me { box-shadow: inset 0 0 0 1.5px var(--bone); }
+.stage .task--mine .name { background: var(--bone-2); }
+.stage .task--mine .name--me { box-shadow: inset 0 0 0 1.5px var(--ink-deep); }
 .stage .free { color: rgba(242, 239, 234, 0.75); background: rgba(242, 239, 234, 0.07); }
 
 /* ---------- табло ---------- */
@@ -220,10 +224,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* ---------- задачи ---------- */
 .tasks { display: flex; flex-direction: column; gap: 7px; }
 .task {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 9px 10px 9px 9px;
   border-radius: 16px;
   background: var(--paper);
   border: 1px solid var(--line);
@@ -231,8 +231,18 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-size: 15.5px;
   line-height: 1.25;
   color: var(--ink-strong);
-  transition: opacity 0.3s;
+  overflow: hidden;
+  transition: opacity 0.3s, background 0.3s;
 }
+.task__row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 9px 10px 9px 9px;
+  transition: transform 0.25s var(--ease);
+}
+.task__row:active { transform: scale(0.985); }
 .task__icon {
   flex: none;
   display: grid;
@@ -244,15 +254,36 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   color: var(--ink);
 }
 .task__text { flex: 1; min-width: 0; }
+.task__stack { flex: none; transition: opacity 0.3s, transform 0.3s var(--ease); }
+.task.is-open .task__stack { opacity: 0; transform: scale(0.8); }
 .task--mine { background: var(--ink-strong); color: var(--bone); border-color: transparent; }
 .task--mine .task__icon { background: rgba(242, 239, 234, 0.14); color: var(--bone); }
 .task--mine .stack .avatar { box-shadow: 0 0 0 2px var(--ink-strong); }
 .task--mine .stack .avatar--ring { box-shadow: 0 0 0 2px var(--ink-strong), 0 0 0 3.5px var(--bone); }
 .task--other { opacity: 0.5; }
+.task--other.is-open { opacity: 1; }
+
+/* раскрытая задача: все по именам */
+.task__names-in { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 10px 11px 54px; }
+.name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 11px 2px 2px;
+  border-radius: 999px;
+  background: var(--bone);
+  font-size: 14px;
+  font-weight: 700;
+}
+.name--me { box-shadow: inset 0 0 0 1.5px var(--ink-strong); }
+.task--mine .name { background: rgba(242, 239, 234, 0.14); }
+.task--mine .name--me { box-shadow: inset 0 0 0 1.5px var(--bone); }
 
 .tasks--compact { gap: 5px; }
-.tasks--compact .task { padding: 6px 8px 6px 6px; border-radius: 13px; font-size: 14.5px; gap: 9px; }
+.tasks--compact .task { border-radius: 13px; font-size: 14.5px; }
+.tasks--compact .task__row { padding: 6px 8px 6px 6px; gap: 9px; }
 .tasks--compact .task__icon { width: 28px; height: 28px; border-radius: 9px; }
+.tasks--compact .task__names-in { padding: 0 8px 9px 43px; }
 
 .free {
   padding: 12px 14px;
@@ -303,18 +334,23 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .block__sub { margin-top: 4px; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); }
 .block .tasks { margin-top: 12px; }
 
-.past {
+/* прошедшее — на месте и открыто, просто тише */
+.block--past { background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
+.block--past > * { opacity: 0.55; filter: saturate(0.3); }
+.block__check { color: var(--ink-faint); }
+
+.end {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 2px 6px;
-  color: var(--ink-faint);
+  padding: 14px;
+  border-radius: 20px;
+  border: 1.5px dashed var(--line);
   font-weight: 700;
   font-size: 15px;
+  color: var(--ink-soft);
 }
-.past__time { width: 46px; font-variant-numeric: tabular-nums; }
-.past__title { flex: 1; }
-.past--end { padding: 14px; border-radius: 20px; border: 1.5px dashed var(--line); color: var(--ink-soft); }
+.end__time { font-variant-numeric: tabular-nums; }
 
 .mine-pill {
   padding: 2px 9px;
