@@ -657,25 +657,113 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .print { display: none; }
 
 @media print {
-  @page { size: A4; margin: 12mm; }
+  @page { size: A4; margin: 0; }
   html, body { background: #fff; }
   .app, .picker, .sheet, .backdrop, .tabs { display: none !important; }
-  .print { display: block; color: #1f2a34; font-size: 10.5pt; line-height: 1.3; }
-  .print__head { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 8pt; border-bottom: 1.5pt solid #1f2a34; }
-  .print__kicker { font-size: 8pt; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: #6b7682; }
-  .print h1 { margin-top: 3pt; font-family: var(--font-display); font-weight: 400; font-size: 24pt; }
-  .print__meta { text-align: right; font-weight: 700; font-size: 10pt; }
-  .print__table { width: 100%; border-collapse: collapse; margin-top: 6pt; }
-  .print__table td { padding: 5pt 6pt 5pt 0; vertical-align: top; border-bottom: 0.6pt solid #d6d1c8; }
-  .print__time { width: 58pt; font-weight: 800; font-size: 11pt; white-space: nowrap; }
-  .print__time span { font-weight: 600; color: #6b7682; font-size: 9pt; }
-  .print__block { width: 120pt; }
-  .print__block b { display: block; font-family: var(--font-display); font-weight: 500; font-size: 13pt; }
-  .print__block span { font-size: 9pt; color: #6b7682; }
-  .print__task { display: flex; justify-content: space-between; gap: 10pt; }
-  .print__task em { font-style: normal; font-weight: 800; white-space: nowrap; }
-  .print__roles { display: grid; grid-template-columns: 1fr 1fr; gap: 3pt 18pt; margin-top: 10pt; padding-top: 8pt; border-top: 1.5pt solid #1f2a34; font-size: 10pt; }
-  .print__roles b { display: inline-block; min-width: 100pt; }
+
+  .print {
+    position: relative;
+    display: block;
+    width: 210mm;
+    height: 296mm;
+    padding: 10mm 12mm 8mm;
+    overflow: hidden;
+    background: var(--bone);
+    color: var(--ink-strong);
+    font-size: 8.6pt;
+    line-height: 1.25;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print__burst { position: absolute; top: -100pt; right: -95pt; color: #e6e0d6; }
+
+  .print__head { position: relative; display: flex; justify-content: space-between; align-items: flex-end; gap: 20pt; }
+  .print__mark { font-family: var(--font-display); font-size: 9pt; letter-spacing: 0.3em; color: var(--ink-strong); }
+  .print__mark span { font-family: var(--font-ui); font-size: 7pt; letter-spacing: 0.3em; color: var(--ink-soft); margin-left: 4pt; }
+  .print__head h1 {
+    margin-top: 6pt;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 32pt;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .print__sub { margin-top: 5pt; font-size: 9.5pt; font-weight: 700; color: var(--ink-soft); }
+  .print__qr {
+    display: flex;
+    align-items: center;
+    gap: 8pt;
+    padding: 7pt 10pt 7pt 7pt;
+    border-radius: 12pt;
+    background: var(--paper);
+    font-size: 8pt;
+    font-weight: 800;
+    color: var(--ink-soft);
+    line-height: 1.3;
+  }
+  .print__qr img { width: 46pt; height: 46pt; }
+
+  .print__day { margin-top: 10pt; }
+  .pr {
+    display: grid;
+    grid-template-columns: 36pt 14pt 116pt 1fr;
+    column-gap: 6pt;
+    break-inside: avoid;
+  }
+  .pr__time { padding: 4pt 0; text-align: right; font-variant-numeric: tabular-nums; }
+  .pr__time b { display: block; font-size: 10.5pt; font-weight: 800; }
+  .pr__time span { font-size: 7.5pt; font-weight: 600; color: var(--ink-faint); }
+  .pr__rail { position: relative; display: flex; justify-content: center; }
+  .pr__rail::before { content: ''; position: absolute; top: 0; bottom: 0; width: 1.2pt; background: rgba(60, 74, 87, 0.18); }
+  .pr:first-child .pr__rail::before { top: 11pt; }
+  .pr--end .pr__rail::before { bottom: auto; height: 11pt; }
+  .pr__rail i {
+    position: relative;
+    margin-top: 6pt;
+    width: 8pt;
+    height: 8pt;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 2.5pt var(--bone);
+  }
+  .pr--end .pr__rail i { background: var(--bone); box-shadow: 0 0 0 2.5pt var(--bone), inset 0 0 0 1.2pt var(--ink-faint); }
+  .pr__head { padding: 3pt 0; }
+  .pr__head h2 { font-family: var(--font-display); font-weight: 400; font-size: 13.5pt; line-height: 1.05; }
+  .pr__head p { margin-top: 2pt; font-size: 7.5pt; font-weight: 600; color: var(--ink-soft); }
+  .pr--end .pr__head h2 { color: var(--ink-soft); }
+
+  .pr__tasks {
+    margin: 2pt 0;
+    padding: 2.5pt 8pt;
+    border-radius: 9pt;
+    background: var(--paper);
+    align-self: start;
+    border-left: 2.5pt solid var(--accent);
+  }
+  .pr--class .pr__tasks { background: color-mix(in srgb, var(--accent) 9%, var(--paper)); }
+  .pr__tasks li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8pt;
+    padding: 1.35pt 0;
+  }
+  .pr__tasks li + li { border-top: 0.5pt solid rgba(60, 74, 87, 0.1); }
+  .pr__text { flex: 1; min-width: 0; font-weight: 700; }
+  .pr__tasks .pr__who { flex: none; }
+  .pr__who { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: 2pt 6pt; }
+  .pr__who em { font-style: normal; font-weight: 800; font-size: 7.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
+  .pn { display: inline-flex; align-items: center; gap: 2.5pt; font-weight: 700; white-space: nowrap; }
+  .pn i { width: 5.5pt; height: 5.5pt; border-radius: 50%; }
+
+  .print__roles { margin-top: 6pt; padding: 7pt 11pt 8pt; border-radius: 12pt; background: var(--paper); }
+  .print__roles h3 { font-family: var(--font-display); font-weight: 400; font-size: 12.5pt; margin-bottom: 4pt; }
+  .print__grid { display: grid; grid-template-columns: 1fr 1fr; grid-auto-flow: dense; gap: 3pt 16pt; }
+  .prr--wide { grid-column: span 2; }
+  .prr { display: flex; align-items: center; gap: 5pt; }
+  .prr svg { flex: none; color: var(--ink-soft); }
+  .prr b { flex: none; width: 78pt; font-weight: 800; }
+  .prr .pr__who { justify-content: flex-start; flex-wrap: nowrap; }
 }
 
 @media (prefers-reduced-motion: reduce) {
